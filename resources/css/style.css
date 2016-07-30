@@ -2,16 +2,67 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
+
+body {
+  padding-top: 80px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+/*Navbar*/
+
+.navbar-brand, .navbar-nav li a {
+    line-height: 80px;
+    height: 80px;
+    padding-top: 0;
+}
+
+.navbar-brand {
+  font-size:2em;
+}
+
+
+/*Flag*/
+#corner-flag:hover {
+  -webkit-transform: translate(0px, 5px);
+}
+
+#corner-flag {
+  z-index: 1033;
+  transition: all .2s ease-out;
+  top: -15px;
+  right: 10%;
+  position: absolute;
+  background-color: #337ab7;
+  width: 25%;
+  height: 20%;
+  border-radius: 15px;
+}
+
+#flag-link {
+  margin-top: 12%;
+  text-align: center;
+}
+
+#flag-link-text:visited, #flag-link-text:link, #flag-link-text:hover {
+  text-decoration: none;
+}
+
+#flag-link-text {
+  line-height:1em;
+  font-size: 1.35em;
+  color: white;
+}
+
+/*Map Stuff*/
 #map {
   height: 100%;
 }
 
-div#pop {
-  max-height: 200px;
-  width: auto;
-  overflow: auto;
-}
 
 .controls {
   margin-top: 10px;
@@ -61,14 +112,17 @@ div#pop {
 /*Info Window on Maps Marker*/
 
 .info-window {
+  max-height: 200px;
+  width: auto;
 }
+
 
 .window-header {
   font-weight: bold;
 }
 
 .window-clinics-header {
-
+  overflow: auto;
 }
 
 .window-clinic {
@@ -78,3 +132,5 @@ div#pop {
 .right {
   float:right;
 }
+
+
