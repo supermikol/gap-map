@@ -1,4 +1,5 @@
 // // // 501 Congress Ave, Austin, TX 78701, USA
+// // // 501 Congress Ave, Austin, TX 78701, USA
 // // var map, markers, search_markers, output, infowindow;
 // //
 // // function read_file(file) {
@@ -414,13 +415,20 @@ function init_populate() {
                     + clinic['address'] + "</li>";
             }
 
-            var content = "<div class=\"info-window\"><div class=\"window-header\">"
-                + json_obj[key]['zip'] + "<span class=\"right\">" + "Child/Clinic Ratio: "
-                + json_obj[key]['asd_to_clinic_ratio'] + "</span></div><hr>"
-                + "<div class=\"window-clinics-header\">Clinics<ol>" + clinic_list
-                + "</ol></div></div>";
+            // HandleBars
+            var infoWindowSource   = $("#infoWindow-template").html();
+            var infoWindowTemplate = Handlebars.compile(infoWindowSource);
+            var data = {resourceZip: json_obj[key]['zip'], resourceRatio: json_obj[key]['asd_to_clinic_ratio'], resourceList: clinic_list};
+            var content    = infoWindowTemplate(data);
+            // End HandleBars
 
-            content = '<div id=\"pop\">' + content + '</div>';
+            // var content = "<div class=\"info-window\"><div class=\"window-header\">"
+            //     + json_obj[key]['zip'] + "<span class=\"right\">" + "Child/Clinic Ratio: "
+            //     + json_obj[key]['asd_to_clinic_ratio'] + "</span></div><hr>"
+            //     + "<div class=\"window-clinics-header\">Clinics<ol>" + clinic_list
+            //     + "</ol></div></div>";
+
+            // content = '<div id=\"pop\">' + content + '</div>';
             google.maps.event.addListener(marker, 'click',
                 (function(marker, content, infowindow) {
                 return function() {
