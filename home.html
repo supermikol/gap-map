@@ -43,25 +43,23 @@
       </div>
     </nav>
 
-    <input id="pac-input" class="form-control controls" type="text" placeholder="Search Box">
     <div id="map"></div>
 
     <!-- Handlebar Scripts -->
     <script id="infoWindow-template" type="text/x-handlebars-template">
-      <div class="info-window">
-        <div class="window-header">
+      <div id="iw-container">
+        <div class="iw-title">
           {{resourceZip}}
           <span class="right">
-            Child/Clinic Ratio: {{resourceRatio}}
+            Ratio: {{resourceRatio}}
           </span>
         </div>
-        <hr>
-        <div class="window-clinics-header">
-          Clinics
+        <div class="iw-content">
           <ol>
             {{{resourceList}}}
           </ol>
         </div>
+        <div class="iw-bottom-gradient"></div>
       </div>
     </script>
 
@@ -75,14 +73,6 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="resources/js/map.js"></script>
-    <script src="resources/js/app.js"></script>
   </body>
 </html>
-
-
-
-
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
