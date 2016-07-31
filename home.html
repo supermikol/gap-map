@@ -48,20 +48,19 @@
 
     <!-- Handlebar Scripts -->
     <script id="infoWindow-template" type="text/x-handlebars-template">
-      <div class="info-window">
-        <div class="window-header">
+      <div id="iw-container">
+        <div class="iw-title">
           {{resourceZip}}
           <span class="right">
-            Child/Clinic Ratio: {{resourceRatio}}
+            Ratio: {{resourceRatio}}
           </span>
         </div>
-        <hr>
-        <div class="window-clinics-header">
-          Clinics
+        <div class="iw-content">
           <ol>
             {{{resourceList}}}
           </ol>
         </div>
+        <div class="iw-bottom-gradient"></div>
       </div>
     </script>
 

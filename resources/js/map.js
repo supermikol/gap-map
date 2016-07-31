@@ -375,10 +375,15 @@ function populate_bounds() {
 }
 
 function init_populate() {
+    // HandleBars
+    var infoWindowSource   = $("#infoWindow-template").html();
+    var infoWindowTemplate = Handlebars.compile(infoWindowSource);
+    // End HandleBars
+
     for (key in json_obj) {
         if (json_obj.hasOwnProperty(key)) {
             var ratio = json_obj[key]['asd_to_clinic_ratio'];
-            var fillColor = color(json_obj[key]['normalize_ratio']);
+            // var fillColor = color(json_obj[key]['normalize_ratio']);
 
             if (ratio <= 30) { // light blue
                 fillColor = "#62B1F6";
@@ -406,29 +411,18 @@ function init_populate() {
                 })
             });
 
-            var clinic_list, clinic;
-            var clinic_list = "";
+            var resourceList, clinic;
+            var resourceList = "";
             for (var i = 0; i < json_obj[key]['clinics'].length; i++) {
                 clinic = json_obj[key]['clinics'][i];
-                clinic_list += "<li class=\"window-clinic\"><a href=\""
+                resourceList += "<li class=\"window-clinic\"><a href=\""
                     + clinic['website'] + "\"" + clinic['name'] + "</a>"
                     + clinic['address'] + "</li>";
             }
 
-            // HandleBars
-            var infoWindowSource   = $("#infoWindow-template").html();
-            var infoWindowTemplate = Handlebars.compile(infoWindowSource);
-            var data = {resourceZip: json_obj[key]['zip'], resourceRatio: json_obj[key]['asd_to_clinic_ratio'], resourceList: clinic_list};
+            var data = {resourceZip: json_obj[key]['zip'], resourceRatio: json_obj[key]['asd_to_clinic_ratio'], resourceList: resourceList};
             var content    = infoWindowTemplate(data);
-            // End HandleBars
 
-            // var content = "<div class=\"info-window\"><div class=\"window-header\">"
-            //     + json_obj[key]['zip'] + "<span class=\"right\">" + "Child/Clinic Ratio: "
-            //     + json_obj[key]['asd_to_clinic_ratio'] + "</span></div><hr>"
-            //     + "<div class=\"window-clinics-header\">Clinics<ol>" + clinic_list
-            //     + "</ol></div></div>";
-
-            // content = '<div id=\"pop\">' + content + '</div>';
             google.maps.event.addListener(marker, 'click',
                 (function(marker, content, infowindow) {
                 return function() {
@@ -467,6 +461,58 @@ function init() {
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     init_populate();
+
+    // infoWindow template modification
+    // START INFOWINDOW CUSTOMIZE.
+    // The google.maps.event.addListener() event expects
+    // the creation of the infowindow HTML structure 'domready'
+    // and before the opening of the infowindow, defined styles are applied.
+    // *
+    google.maps.event.addListener(infowindow, 'domready', function() {
+
+    // Reference to the DIV that wraps the bottom of infowindow
+    var iwOuter = $('.gm-style-iw');
+
+    /* Since this div is in a position prior to .gm-div style-iw.
+     * We use jQuery and create a iwBackground variable,
+     * and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+    */
+    var iwBackground = iwOuter.prev();
+
+    // Removes background shadow DIV
+    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+    // Removes white background DIV
+    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+    // Moves the infowindow 115px to the right.
+    iwOuter.parent().parent().css({left: '115px'});
+
+    // Moves the shadow of the arrow 76px to the left margin.
+    iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+
+    // Moves the arrow 76px to the left margin.
+    iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+
+    // Changes the desired tail shadow color.
+    iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
+
+    // Reference to the div that groups the close button elements.
+    var iwCloseBtn = iwOuter.next();
+
+    // Apply the desired effect to the close button
+    iwCloseBtn.css({opacity: '1', right: '38px', top: '3px', border: '7px solid #48b5e9', 'border-radius': '13px', 'box-shadow': '0 0 5px #3990B9'});
+
+    // If the content of infowindow not exceed the set maximum height, then the gradient is removed.
+    if($('.iw-content').height() < 140){
+      $('.iw-bottom-gradient').css({display: 'none'});
+    }
+
+    // The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+    iwCloseBtn.mouseout(function(){
+      $(this).css({opacity: '1'});
+    });
+    });
 
     // Bias the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', function() {
