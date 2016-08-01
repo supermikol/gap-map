@@ -54,7 +54,7 @@ function init_populate() {
 
     for (key in json_obj) {
         if (json_obj.hasOwnProperty(key)) {
-            var resourceRatio = parseFloat(json_obj[key]['asd_to_clinic_ratio']).toFixed(2);
+            var resourceRatio = parseFloat(json_obj[key]['ratio']).toFixed(2);
             // var fillColor = color(json_obj[key]['normalize_ratio']);
 
             if (resourceRatio <= 30) { // light blue
@@ -87,9 +87,14 @@ function init_populate() {
             var resourceList = "";
             for (var i = 0; i < json_obj[key]['clinics'].length; i++) {
                 clinic = json_obj[key]['clinics'][i];
-                resourceList += "<li class=\"window-clinic\"><a href=\""
-                    + clinic['website'] + "\"" + clinic['name'] + "</a>"
-                    + clinic['address'] + "</li>";
+                // console.log(clinic['website']);
+                if (clinic['website']) {
+                    resourceList = "<li class=\"window-clinic\"><a href=\""
+                        + clinic['website'] + "\">" + clinic['name'] + "</a>" + "<br>" + clinic['address'] + "</li>" + resourceList;
+
+                } else {
+                    resourceList += "<li class=\"window-clinic\">" + clinic['name'] + "<br>" + clinic['address'] + "</li>";
+                }
             }
 
             var data = {resourceZip: json_obj[key]['zip'], resourceRatio: resourceRatio, resourceList: resourceList};
