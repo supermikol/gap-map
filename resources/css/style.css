@@ -44,9 +44,11 @@ body {
 }
 
 #flag-link {
-  margin-top: 12%;
+  margin-top: 8%;
   text-align: center;
 }
+
+
 
 #flag-link-text:visited, #flag-link-text:link, #flag-link-text:hover {
   text-decoration: none;
@@ -126,6 +128,7 @@ body {
 }
 
 .window-clinic {
+  min-width: 315px;
 
 }
 
@@ -187,4 +190,8 @@ body {
     background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
     background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
     background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+}
+
+.iw-content ol {
+  padding-left: 10px;
 }
