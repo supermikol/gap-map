@@ -8,6 +8,7 @@ stanford = {lat:37.424106, lng:-122.166076};
 map = new GMaps({
     el: '#map',
     center: stanford,
+    zoom: 10,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: map_style
 });
